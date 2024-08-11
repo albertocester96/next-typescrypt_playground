@@ -12,7 +12,7 @@ const NavBar = () => {
 
   const menu = [
     { label: "Dasboard", href: "/dashboard"},
-    { label: "About", href: "/about"}
+    { label: "Issue", href: "/issue"}
   ]
 
   return (
