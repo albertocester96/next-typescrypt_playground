@@ -16,14 +16,19 @@ const NewIssuePage = () => {
 
     const onSubmit: SubmitHandler<IssueForm> = async (data) => {
       try{
-          fetch("/api/issues/", {
+          const res = await fetch("/api/issues/", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify(data)
         });
+
+        if (!res.ok) {
+          throw new Error("Invio invalido");
+        }
+        
         router.push('/issue')
       } catch (error) {
-        console.error(error)
+          console.error(error)
       }
     }
 
