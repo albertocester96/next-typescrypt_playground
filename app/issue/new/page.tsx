@@ -3,7 +3,6 @@
 import React from 'react'
 import { Button, TextArea, TextField } from '@radix-ui/themes'
 import { createIssue } from '@/actions/actions';
-import Link from 'next/link';
 
 
 const NewIssuePage = () => {
@@ -11,7 +10,7 @@ const NewIssuePage = () => {
     <form className="max-w-xl space-y-5" action={createIssue}>
       <TextField.Root placeholder="Issue Title" name='title' />
       <TextArea placeholder="Insert the issue description" name='description' />
-      <Button><Link href="/dashboard">Submit New Issue</Link></Button>
+      <Button>Submit New Issue </Button>
     </form>
   )
 }
