@@ -11,8 +11,8 @@ const NavBar = () => {
   const currenPath = usePathname()
 
   const menu = [
-    { label: "Dasboard", href: "/dashboard"},
-    { label: "Issue", href: "/issue"}
+    { label: "Crea Partita", href: "/crea-partita"},
+    { label: "Teams", href: "/teams"}
   ]
 
   return (
