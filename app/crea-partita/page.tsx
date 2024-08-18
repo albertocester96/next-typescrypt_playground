@@ -1,47 +1,31 @@
-import React from 'react'
+'use client'
+
+import { createMatch } from '@/actions/actions';
+import { Button } from '@radix-ui/themes';
+import React, { useState } from 'react'
 
 const NewMatch = () => {
 
-    const matchData = [ 
-        "Giocatori",
-        "Calendario",
-        "Location",
-        "Giocatori/Gruppi"
-    ]
+    const numberOfPlayers: number[] = [8,10,12,14]
+
+    const [numPlayers, setNumPlayers ] = useState(0)
 
   return (
-    <div>
-        <section className='w-full flex justify-center pt-10 pb-3'>
-            <div className='bg-slate-200 rounded-md flex flex-col p-4 md:flex-row w-2/4 max-w-screen-md justify-center'>
-                <div className='min-w-40 min-h-40 bg-yellow-400'>
-                    <h1 className='flex justify-center items-center h-full'> Cerchio </h1>
-                </div>
-                <div className='bg-yellow-200 flex grow h-full'>
-                    <div className='bg-red-400 p-2 w-full place-content-center pl-5'>
-                        <h1 className='font-bold text-lg'> Crea partita </h1>
-                        <p> Componenti </p>
-                    </div>
-                </div>
+    <form id="numPlayers" className='w-full flex flex-col justify-center' action={createMatch}>
+            <h1 className='text-center mb-2'> Giocatori </h1>
+            <div className='flex flex-row space-x-2 justify-center'>
+                {numberOfPlayers.map((item, index) =>
+                
+                <Button radius="full"
+                    key={index} 
+                    onClick={() => setNumPlayers(item)}>
+                        {item}
+                </Button>
+                )
+                }
+            <input type="hidden" name='numberOfPlayers' value={numPlayers} />
             </div>
-
-        </section>
-
-        <section className='w-full flex justify-center py-20'> 
-                <div className='bg-slate-200 rounded-md flex flex-col p-6 md:flex-row w-2/4 max-w-screen-md justify-center'>
-                <div className='w-full space-y-2'>
-                    {matchData.map((item: String) => 
-                        <div className='flex flex-row justify-between py-5 px-4 rounded-md border-2 border-black '>
-                            <h1> {item} </h1>
-                            <p> Cerca </p>
-                        </div>
-                    )}
-                     
-                </div>
-                    
-                </div>
-        </section>
-
-    </div>
+    </form>
   )
 }
 

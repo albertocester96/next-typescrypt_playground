@@ -1,40 +1,42 @@
 "use server";
 
 import prisma from "@/prisma/client";
-import { revalidatePath } from "next/cache";
 import z from 'zod';
 
-const createIssueSchema = z.object({
-    title: z.string().min(1, "Title is required").max(255),
-    description: z.string().min(1, "Description is required"),
-    slug: z.string().toLowerCase()
+const createMatchSchema = z.object({
+    numberOfPlayers: z.number({ required_error: "Selezionare un numero di giocatori" })
+    // dateTime: z.string().min(1, "Description is required"),
+    // location: z.string().toLowerCase()
+    // players: z.string()
 });
 
 
-export async function createIssue(formData: FormData) {
+export async function createMatch(formData: FormData) {
 
-    const validationResult = createIssueSchema.safeParse({
-        title: formData.get('title'),
-        description: formData.get('description'),
-        slug: formData.get('title')?.toString().replace(/\s+/g, "-").toLowerCase()
+    const validationResult = createMatchSchema.safeParse({
+        numberOfPlayers: formData.get('numberOfPlayers')
+        // description: formData.get('description'),
+        // slug: formData.get('title')?.toString().replace(/\s+/g, "-").toLowerCase()
     });
 
     if (!validationResult.success) {
         return { error: validationResult.error.flatten() };
-    }
+    } 
 
-    const { title, description, slug } = validationResult.data;
+    const { numberOfPlayers } = validationResult.data;
+
+    console.log(numberOfPlayers)
 
     try {
-        const newIssue = await prisma.issue.create({
-            data: { title, description, slug }
+        const newMatch = await prisma.match.create({
+            data: { numberOfPlayers }
         });
 
-        revalidatePath("/dashboard")
+        console.log(newMatch.numberOfPlayers)
 
-        return { success: true, issue: newIssue };
+        return { success: true, match: newMatch };
     } catch (error) {
-        console.error("Failed to create issue:", error);
-        return { error: "An error occurred while creating the issue." };
+        console.error("Failed to create match:", error);
+        return { error: "An error occurred while creating the match." };
     }
 }
