@@ -1,5 +1,6 @@
 
 import { createMatch } from '@/actions/actions';
+import DateTimeSelector from '@/components/DateTimeSelector';
 import NumPlayersSelector from '@/components/NumPlayersSelector';
 import { Button } from '@radix-ui/themes';
 
@@ -8,12 +9,15 @@ const NewMatch = () => {
 
   return (
     <form id="numPlayers" className='w-full flex flex-col justify-center' action={createMatch}>
-            <h1 className='text-center mb-2'> Giocatori </h1>
-            
 
-            <div className='flex justify-center'>
+            <div className='flex flex-col justify-center space-y-6'>
+            <h1 className='text-center mb-2'> Giocatori </h1>
                 <NumPlayersSelector />
-                <Button type='submit'>
+
+            <h1 className='text-center mb-2'> Data e ora </h1>
+                <DateTimeSelector />
+
+                <Button>
                     Crea partita
                 </Button>
             </div>

@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/prisma/client";
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import z from 'zod';
 
 const createMatchSchema = z.object({
@@ -33,15 +33,16 @@ export async function createMatch(formData: FormData) {
     try {
         const newMatch = await prisma.match.create({
             data: { numberOfPlayers }
-        });
+        }
+        )
 
-        console.log(newMatch.numberOfPlayers)
+        console.log({success: true, match: newMatch })
 
-        revalidatePath("/dashboard")
-
-        return console.log({success: true, match: newMatch });
     } catch (error) {
         console.error("Failed to create match:", error);
         return { error: "An error occurred while creating the match." };
     }
+
+
+    redirect("/teams")
 }

@@ -22,7 +22,7 @@ const NumPlayersSelector = () => {
                 )
                 }
                 </SegmentedControl.Root>
-            <input type="hidden" name='numberOfPlayers' value={selectedPlayers} />
+            <input required type="hidden" name='numberOfPlayers' value={selectedPlayers} />
             </div>
   )
 }
