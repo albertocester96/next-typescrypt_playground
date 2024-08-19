@@ -14,45 +14,45 @@ datasource db {
 }
 
 model User {
-  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  name               String?
-  email              String?   @unique
-  emailVerified      DateTime?
-  hashedPassword     String?
-  imageUrl           String?
-  Role               Roles? 
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  id                  String      @id @default(auto()) @map("_id") @db.ObjectId
+  name                String?
+  email               String?     @unique
+  emailVerified       DateTime?
+  hashedPassword      String?
+  imageUrl            String?
+  Role                Roles?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
   //createdMatches     Match[]   @relation("CreatedMatches")
   participatedMatches UserMatch[]
-  sessions           Session[]
-  preferredTimes     String[]
-  preferredFields    String[]
-  preferredDays      String[]
-  userGroups         UserGroup[]
+  sessions            Session[]
+  preferredTimes      String[]
+  preferredFields     String[]
+  preferredDays       String[]
+  userGroups          UserGroup[]
 }
 
 model Session {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String @unique
-  userId String @db.ObjectId
-  expires DateTime
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificaionToken {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
-  token String @unique
-  expires DateTime
+  token      String   @unique
+  expires    DateTime
 
   @@unique([identifier, token])
 }
 
 model Group {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
   userGroups UserGroup[]
   //matches   Match[]
 }
@@ -68,10 +68,10 @@ model UserGroup {
 }
 
 model Match {
-  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
   // date            DateTime
   // time            String
-  numberOfPlayers Int        
+  numberOfPlayers String
   // field           String
   // creatorId       String      @db.ObjectId
   // creator         User        @relation("CreatedMatches", fields: [creatorId], references: [id])

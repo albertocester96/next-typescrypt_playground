@@ -1,10 +1,11 @@
 "use server";
 
 import prisma from "@/prisma/client";
+import { revalidatePath } from "next/cache";
 import z from 'zod';
 
 const createMatchSchema = z.object({
-    numberOfPlayers: z.number({ required_error: "Selezionare un numero di giocatori" })
+    numberOfPlayers: z.string({ required_error: "Selezionare un numero di giocatori" })
     // dateTime: z.string().min(1, "Description is required"),
     // location: z.string().toLowerCase()
     // players: z.string()
@@ -12,6 +13,8 @@ const createMatchSchema = z.object({
 
 
 export async function createMatch(formData: FormData) {
+
+    console.log(formData)
 
     const validationResult = createMatchSchema.safeParse({
         numberOfPlayers: formData.get('numberOfPlayers')
@@ -34,7 +37,9 @@ export async function createMatch(formData: FormData) {
 
         console.log(newMatch.numberOfPlayers)
 
-        return { success: true, match: newMatch };
+        revalidatePath("/dashboard")
+
+        return console.log({success: true, match: newMatch });
     } catch (error) {
         console.error("Failed to create match:", error);
         return { error: "An error occurred while creating the match." };
