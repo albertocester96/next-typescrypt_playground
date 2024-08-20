@@ -69,7 +69,7 @@ model UserGroup {
 
 model Match {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
-  // date            DateTime
+  dateTime           DateTime
   // time            String
   numberOfPlayers String
   // field           String
