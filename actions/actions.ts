@@ -5,9 +5,12 @@ import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import { redirect } from "next/navigation";
 import z from 'zod';
+import 'dayjs/locale/it'
+import custom from 'dayjs/plugin/customParseFormat'
 
 
 dayjs.extend(utc);
+dayjs.extend(custom);
 
 
 const createMatchSchema = z.object({
@@ -21,15 +24,14 @@ const createMatchSchema = z.object({
 export async function createMatch(formData: FormData) {
 
     const date = formData.get('dateTime')?.toString()
-    const utcDate = dayjs(date).utc().format()
-
-    console.log('data selezionata:' + date, 'data utc:' + utcDate)
+    const parsedDate = dayjs(date, 'DD/MM/YYYY HH:mm', 'it')
+    const utcDate = dayjs.utc(parsedDate)
 
     const validationResult = createMatchSchema.safeParse({
         numberOfPlayers: formData.get('numberOfPlayers'),
         dateTime: utcDate
         
-        // slug: formData.get('title')?.toString().replace(/\s+/g, "-").toLowerCase()
+        // slug: formData.get('title')?.toStrinåg().replace(/\s+/g, "-").toLowerCase()
     });   
 
     if (!validationResult.success) {
