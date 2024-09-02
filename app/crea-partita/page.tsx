@@ -1,6 +1,7 @@
 
 import { createMatch } from '@/actions/actions';
 import DateTimeSelector from '@/components/DateTimeSelector';
+import LocationSelector from '@/components/LocationSelector';
 import NumPlayersSelector from '@/components/NumPlayersSelector';
 import { Button } from '@radix-ui/themes';
 
@@ -16,6 +17,9 @@ const NewMatch = () => {
 
             <h1 className='text-center mb-2'> Data e ora </h1>
                 <DateTimeSelector />
+
+            <h1 className='text-center mb-2'> Campo </h1>
+                <LocationSelector />
 
                 <Button>
                     Crea partita

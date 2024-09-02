@@ -70,9 +70,8 @@ model UserGroup {
 model Match {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   dateTime           DateTime
-  // time            String
   numberOfPlayers String
-  // field           String
+  location           String
   // creatorId       String      @db.ObjectId
   // creator         User        @relation("CreatedMatches", fields: [creatorId], references: [id])
   // participants    UserMatch[]

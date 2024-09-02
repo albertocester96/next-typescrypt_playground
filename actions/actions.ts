@@ -15,23 +15,23 @@ dayjs.extend(custom);
 
 const createMatchSchema = z.object({
     numberOfPlayers: z.string({ required_error: "Selezionare un numero di giocatori" }),
-    dateTime: z.coerce.date()
+    dateTime: z.coerce.date(), //validate a Date object
+    location: z.string()
 })
-    // location: z.string().toLowerCase()
-    // players: z.string();
 
 
 export async function createMatch(formData: FormData) {
 
+    //...value from form formatted to string, passed to parse in italian and converted to utc to store
     const date = formData.get('dateTime')?.toString()
     const parsedDate = dayjs(date, 'DD/MM/YYYY HH:mm', 'it')
     const utcDate = dayjs.utc(parsedDate)
+    //...
 
     const validationResult = createMatchSchema.safeParse({
         numberOfPlayers: formData.get('numberOfPlayers'),
         dateTime: utcDate
         
-        // slug: formData.get('title')?.toStrinåg().replace(/\s+/g, "-").toLowerCase()
     });   
 
     if (!validationResult.success) {
@@ -40,14 +40,15 @@ export async function createMatch(formData: FormData) {
         console.log("Validation passed:", validationResult.data);
     }
 
-    const { numberOfPlayers, dateTime } = validationResult.data;
+    const { numberOfPlayers, dateTime , location} = validationResult.data;
 
-    console.log(numberOfPlayers, dateTime)
+    console.log(numberOfPlayers, dateTime, location)
 
     try {
         const newMatch = await prisma.match.create({
             data: { numberOfPlayers, 
-                    dateTime: dateTime}
+                    dateTime: dateTime,
+                    location}
         },
         )
         console.log({success: true, match: newMatch })
