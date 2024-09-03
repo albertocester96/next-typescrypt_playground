@@ -15,8 +15,7 @@ dayjs.extend(custom);
 
 const createMatchSchema = z.object({
     numberOfPlayers: z.string({ required_error: "Selezionare un numero di giocatori" }),
-    dateTime: z.coerce.date(), //validate a Date object
-    location: z.string()
+    dateTime: z.coerce.date() //validate a Date object
 })
 
 
@@ -40,15 +39,15 @@ export async function createMatch(formData: FormData) {
         console.log("Validation passed:", validationResult.data);
     }
 
-    const { numberOfPlayers, dateTime , location} = validationResult.data;
+    const { numberOfPlayers, dateTime } = validationResult.data;
 
-    console.log(numberOfPlayers, dateTime, location)
+    console.log(numberOfPlayers, dateTime)
 
     try {
         const newMatch = await prisma.match.create({
-            data: { numberOfPlayers, 
-                    dateTime: dateTime,
-                    location}
+            data: { numberOfPlayers,
+                    dateTime: dateTime
+                }
         },
         )
         console.log({success: true, match: newMatch })
@@ -62,5 +61,5 @@ export async function createMatch(formData: FormData) {
         
     }
 
-    redirect("/teams")
+    //redirect("/teams")
 }
